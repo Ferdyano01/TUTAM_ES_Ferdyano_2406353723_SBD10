@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"on-surface": "#dee3e9", "inverse-primary": "#006492", "surface-container-high": "#252b2f", "surface-dim": "#0e1418", "on-tertiary-fixed": "#2b1700", "primary-fixed": "#c9e6ff", "on-primary-fixed": "#001e2f", "surface-tint": "#8bceff", "primary-fixed-dim": "#8bceff", "inverse-surface": "#dee3e9", "error-container": "#93000a", "on-primary-fixed-variant": "#004b6f", "secondary-fixed": "#cae6ff", "on-error-container": "#ffdad6", outline: "#88929c", "on-secondary-fixed": "#001e2f", "on-secondary-fixed-variant": "#1f4b66", "on-tertiary-fixed-variant": "#673d00", "outline-variant": "#3e4851", "surface-bright": "#343a3e", background: "#0e1418", "on-primary": "#00344e", "on-secondary": "#00344e", "surface-variant": "#30363a", secondary: "#a3cbec", "tertiary-fixed": "#ffdcbb", tertiary: "#ffb869", error: "#ffb4ab", "surface-container-lowest": "#090f13", "inverse-on-surface": "#2b3136", "on-surface-variant": "#bdc8d2", "secondary-fixed-dim": "#a3cbec", "surface-container": "#1a2024", primary: "#8bceff", "on-error": "#690005", "surface-container-highest": "#30363a", "on-background": "#dee3e9", surface: "#0e1418", "on-tertiary": "#482900", "primary-container": "#01b0fc", "secondary-container": "#224d69", "tertiary-container": "#ec9103", "surface-container-low": "#161c20", "on-secondary-container": "#95bdde", "on-primary-container": "#00405f", "on-tertiary-container": "#583300", "tertiary-fixed-dim": "#ffb869"}, borderRadius: {DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px"}, spacing: {"stack-md": "24px", "stack-lg": "48px", base: "8px", gutter: "16px", "container-margin": "24px", "stack-sm": "12px"}, fontFamily: {"label-caps": ["Plus Jakarta Sans"], "headline-md": ["Plus Jakarta Sans"], "body-md": ["Plus Jakarta Sans"], "display-lg": ["Plus Jakarta Sans"], "title-sm": ["Plus Jakarta Sans"]}, fontSize: {"label-caps": ["12px", {lineHeight: "1.0", letterSpacing: "0.1em", fontWeight: "700"}], "headline-md": ["32px", {lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "700"}], "body-md": ["16px", {lineHeight: "1.6", fontWeight: "400"}], "display-lg": ["48px", {lineHeight: "1.1", letterSpacing: "-0.04em", fontWeight: "800"}], "title-sm": ["20px", {lineHeight: "1.4", fontWeight: "600"}]}}}};</script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .glass-card {
+            background: rgba(26, 27, 35, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(188, 19, 254, 0.2);
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card:hover {
+            transform: translateY(-4px) scale(1.02);
+            border-color: rgba(188, 19, 254, 0.5);
+            box-shadow: 0 12px 24px -8px rgba(188, 19, 254, 0.3);
+        }
+        .etched-input {
+            background: rgba(13, 14, 17, 0.8);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(188, 19, 254, 0.1);
+        }
+        .glow-pulse {
+            box-shadow: 0 0 0 0 rgba(0, 244, 254, 0.4);
+            animation: pulse-glow 2s infinite;
+        }
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 0 0 rgba(0, 244, 254, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(0, 244, 254, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 244, 254, 0); }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen">
+<!-- Sidebar Navigation -->
+<aside class="fixed left-0 top-0 h-screen w-64 bg-[#1A1B23]/60 backdrop-blur-xl border-r border-[#BC13FE]/20 shadow-[4px_0_24px_rgba(0,0,0,0.5)] flex flex-col py-8 px-4 z-50">
+<div class="mb-10 px-2">
+<h1 class="text-2xl font-black text-[#BC13FE] tracking-tight">Gas Planner</h1>
+<p class="text-zinc-400 text-xs font-label-caps mt-1">Orbital Precision</p>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-[#BC13FE]/10 text-[#BC13FE] border-r-2 border-[#BC13FE] font-bold transition-all" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-caps">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-zinc-400 hover:text-zinc-100 hover:bg-white/5 hover:translate-x-1 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">query_stats</span>
+<span class="font-label-caps">Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-zinc-400 hover:text-zinc-100 hover:bg-white/5 hover:translate-x-1 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">schedule_send</span>
+<span class="font-label-caps">Active Plans</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-zinc-400 hover:text-zinc-100 hover:bg-white/5 hover:translate-x-1 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">history</span>
+<span class="font-label-caps">History</span>
+</a>
+</nav>
+<div class="mt-auto pt-8 border-t border-white/10 flex items-center gap-3 px-2">
+<div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary-container to-secondary-container overflow-hidden">
+<img alt="User Profile Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAgggIFEUhcftXfwRYPqvM0xe8tClAnMxXl2Gt_qbLjfSxDkbzhQYC1t-_lC6HcR_HzNZ3hyM-Qn17TrXPQzadglQAz3M_JY6LyZdGe17jC_GxaT66u7llfLHENl0N9ytEKoPMX03cmJz2TogHNFvE0K8p_i5xYvTtursgMOFLOUTUdAcPBu1CGjbU8qIFMkGTAuWLnqweKn5FNk_e1MSshjIvIhMVA6yuRtBsi8FjSX-7ApQqox2lpX5vFNMvxnMatBiNsKyFTBYA"/>
+</div>
+<div>
+<p class="text-sm font-bold text-on-surface">Alex Void</p>
+<p class="text-[10px] text-zinc-500 uppercase tracking-widest">Premium Node</p>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 min-h-screen relative overflow-hidden">
+<!-- Abstract Background -->
+<div class="absolute inset-0 z-0 opacity-20 pointer-events-none">
+<img class="w-full h-full object-cover" data-alt="A highly complex and abstract digital network visualization consisting of interconnected glowing nodes and neural pathways. The background is a deep, obsidian void, while the web structures pulse with soft ethereal light in shades of violet and cyan. High-tech digital textures and faint data streams float in the middle distance, creating a sense of vast, multidimensional blockchain space and predictive intelligence." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbOJzxTfJTgxDw-TWS-_iGnRYxUGxieJ-fCbMQuvGf19JvUxDGRQy0sJ-0sSyK8EMtXdQ3aALsimbRgwBw-wngWWo-xtYp5nD_IlLT-lgbg_41GwCX6umNRd-jXIhNURskQUaExtrRQWbB0RJwIHw7tX6Ssxm3NEH7PnNgWD_WGuqp8JsXqoqbh-o8hrH110y0YSLuM7RwRBY6kgf17-gyIAiWJYuKrxmy4vPEKvoTs780Ky506FPgF6oR-r2nGNt2MY30fTP9Fhk"/>
+</div>
+<!-- Top App Bar -->
+<header class="sticky top-0 w-full h-16 bg-[#1A1B23]/40 backdrop-blur-md border-b border-[#BC13FE]/10 flex justify-between items-center px-8 z-40">
+<div class="flex items-center gap-4">
+<h2 class="font-headline-md text-sm text-on-surface">Gas Fee Planner</h2>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative flex items-center bg-surface-container-lowest/50 rounded-full px-4 py-1.5 border border-white/5">
+<span class="material-symbols-outlined text-zinc-500 text-sm">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-xs text-on-surface w-48" placeholder="Cari transaksi..." type="text"/>
+</div>
+<div class="flex items-center gap-4 text-zinc-400">
+<span class="material-symbols-outlined hover:text-primary transition-colors cursor-pointer">notifications</span>
+<span class="material-symbols-outlined hover:text-primary transition-colors cursor-pointer">settings</span>
+</div>
+</div>
+</header>
+<!-- Canvas Container -->
+<div class="relative z-10 px-10 py-stack-lg max-w-7xl mx-auto">
+<!-- Hero Greeting -->
+<section class="mb-stack-lg">
+<h1 class="font-display-lg text-on-surface">Selamat Datang, Commander.</h1>
+<p class="text-zinc-400 mt-stack-sm max-w-2xl text-body-md">
+                    Sistem prediksi orbital kami mendeteksi fluktuasi jaringan yang stabil. Gunakan instrumen di bawah untuk mengoptimasi efisiensi gas fee Anda dengan presisi matematis.
+                </p>
+</section>
+<!-- Stats Grid -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-gutter mb-stack-lg">
+<!-- Gas Fee Card -->
+<div class="glass-card p-6 rounded-xl flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<span class="text-zinc-400 font-label-caps">Gas Fee Saat Ini</span>
+<div class="w-3 h-3 rounded-full bg-secondary-container glow-pulse"></div>
+</div>
+<div class="flex items-baseline gap-2 mt-2">
+<span class="text-4xl font-extrabold text-secondary-container tracking-tighter">12.4</span>
+<span class="text-sm font-label-caps text-zinc-500">GWEI</span>
+</div>
+<p class="text-[10px] text-zinc-500 uppercase tracking-widest mt-2">Update terakhir: 2 detik yang lalu</p>
+</div>
+<!-- Trend Card -->
+<div class="glass-card p-6 rounded-xl flex flex-col gap-2">
+<span class="text-zinc-400 font-label-caps">Tren Gas (24j)</span>
+<div class="flex items-center gap-3 mt-2">
+<div class="w-10 h-10 rounded-full bg-error-container/20 flex items-center justify-center border border-error/30">
+<span class="material-symbols-outlined text-error">trending_down</span>
+</div>
+<div>
+<span class="text-2xl font-bold text-on-surface">-15.2%</span>
+<p class="text-[10px] text-zinc-500 uppercase">Volatilitas Rendah</p>
+</div>
+</div>
+</div>
+<!-- Active Plans Card -->
+<div class="glass-card p-6 rounded-xl flex flex-col gap-2">
+<span class="text-zinc-400 font-label-caps">Jumlah Rencana Aktif</span>
+<div class="flex items-center gap-3 mt-2">
+<div class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center border border-primary/30">
+<span class="material-symbols-outlined text-primary">analytics</span>
+</div>
+<div>
+<span class="text-4xl font-bold text-primary">08</span>
+<p class="text-[10px] text-zinc-500 uppercase">Menunggu Eksekusi</p>
+</div>
+</div>
+</div>
+</section><section class="glass-card p-8 rounded-2xl mb-stack-lg">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+<div>
+<h3 class="font-title-sm text-on-surface">Riwayat Gas Fee</h3>
+<p class="text-xs text-zinc-500 mt-1">Pergerakan harga gas dalam rentang waktu orbital.</p>
+</div>
+<div class="flex bg-surface-container-lowest/50 p-1 rounded-lg border border-white/5">
+<button class="px-4 py-1.5 text-[10px] font-bold uppercase tracking-widest text-on-primary-container bg-primary-container rounded-md transition-all shadow-[0_0_15px_rgba(188,19,254,0.3)]">
+    24h
+</button>
+<button class="px-4 py-1.5 text-[10px] font-bold uppercase tracking-widest text-zinc-500 hover:text-secondary-container hover:bg-secondary-container/5 rounded-md transition-all">
+    7d
+</button>
+<button class="px-4 py-1.5 text-[10px] font-bold uppercase tracking-widest text-zinc-500 hover:text-secondary-container hover:bg-secondary-container/5 rounded-md transition-all">
+    30d
+</button>
+</div>
+</div>
+<div class="relative h-[240px] w-full">
+<!-- Luminous Chart Visualization (SVG) -->
+<svg class="w-full h-full overflow-visible" preserveaspectratio="none" viewbox="0 0 1000 200">
+<defs>
+<lineargradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#ebb2ff" stop-opacity="0.3"></stop>
+<stop offset="100%" stop-color="#ebb2ff" stop-opacity="0"></stop>
+</lineargradient>
+<filter id="glow">
+<fegaussianblur result="blur" stddeviation="3"></fegaussianblur>
+<femerge>
+<femergenode in="blur"></femergenode>
+<femergenode in="SourceGraphic"></femergenode>
+</femerge>
+</filter>
+</defs>
+<!-- Area Fill -->
+<path d="M0,150 Q100,80 200,120 T400,60 T600,100 T800,40 T1000,80 L1000,200 L0,200 Z" fill="url(#chartGradient)"></path>
+<!-- Main Line -->
+<path d="M0,150 Q100,80 200,120 T400,60 T600,100 T800,40 T1000,80" fill="none" filter="url(#glow)" stroke="#ebb2ff" stroke-width="3"></path>
+<!-- Secondary Comparison Line (Cyan) -->
+<path d="M0,130 Q150,150 300,90 T600,140 T1000,110" fill="none" stroke="#00f4fe" stroke-dasharray="4 4" stroke-opacity="0.4" stroke-width="1.5"></path>
+</svg>
+<!-- Time Labels -->
+<div class="flex justify-between mt-4 border-t border-white/5 pt-4">
+<span class="text-[10px] font-bold text-zinc-600">00:00</span>
+<span class="text-[10px] font-bold text-zinc-600">06:00</span>
+<span class="text-[10px] font-bold text-zinc-600">12:00</span>
+<span class="text-[10px] font-bold text-zinc-600">18:00</span>
+<span class="text-[10px] font-bold text-zinc-600">SEKARANG</span>
+</div>
+</div>
+</section>
+<!-- Two Column Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Left: Create Transaction Form -->
+<section class="lg:col-span-5">
+<div class="glass-card p-8 rounded-2xl h-fit border-l-4 border-l-secondary-container">
+<div class="mb-stack-md">
+<h3 class="font-title-sm text-on-surface">Rencana Transaksi Baru</h3>
+<p class="text-xs text-zinc-500 mt-1">Konfigurasi parameter target gas fee Anda.</p>
+</div>
+<form class="space-y-stack-md">
+<div class="space-y-2">
+<label class="text-[10px] uppercase tracking-widest text-zinc-400 font-bold">Nama Transaksi</label>
+<input class="w-full etched-input rounded-lg px-4 py-3 text-on-surface placeholder-zinc-600 focus:outline-none focus:ring-1 focus:ring-secondary-container transition-all" placeholder="e.g. Swap ETH to USDC" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="text-[10px] uppercase tracking-widest text-zinc-400 font-bold">Target Gwei</label>
+<div class="relative">
+<input class="w-full etched-input rounded-lg pl-4 pr-12 py-3 text-on-surface placeholder-zinc-600 focus:outline-none focus:ring-1 focus:ring-secondary-container transition-all" placeholder="10.0" type="number"/>
+<span class="absolute right-4 top-1/2 -translate-y-1/2 text-[10px] font-bold text-zinc-500">GWEI</span>
+</div>
+</div>
+<button class="w-full bg-secondary-container text-on-secondary-container py-4 rounded-xl font-bold uppercase tracking-widest text-xs hover:shadow-[0_0_20px_rgba(0,244,254,0.4)] active:scale-95 transition-all duration-200" type="button">
+                                Simpan Rencana
+                            </button>
+</form>
+</div>
+</section>
+<!-- Right: List Area -->
+<section class="lg:col-span-7">
+<div class="flex justify-between items-center mb-stack-md">
+<h3 class="font-title-sm text-on-surface">Daftar Rencana</h3>
+<span class="text-xs text-zinc-500">Total: 4 Aktif</span>
+</div>
+<div class="space-y-4">
+<!-- List Item 1 -->
+<div class="glass-card p-5 rounded-xl flex items-center justify-between group">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary-container">token</span>
+</div>
+<div>
+<h4 class="font-bold text-on-surface">Mint NFT Project Alpha</h4>
+<div class="flex items-center gap-2 mt-1">
+<span class="text-[10px] font-bold py-0.5 px-2 rounded-full bg-green-500/10 text-green-400 border border-green-500/20">Siap Eksekusi</span>
+<span class="text-[10px] text-zinc-500">Target: 15 Gwei</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="w-10 h-10 rounded-lg flex items-center justify-center text-zinc-500 hover:bg-white/5 transition-colors">
+<span class="material-symbols-outlined">edit</span>
+</button>
+<button class="w-10 h-10 rounded-lg flex items-center justify-center text-rose-500 hover:bg-rose-500/10 transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</div>
+<!-- List Item 2 -->
+<div class="glass-card p-5 rounded-xl flex items-center justify-between group">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-zinc-400">sync_alt</span>
+</div>
+<div>
+<h4 class="font-bold text-on-surface">Bridge to Arbitrum</h4>
+<div class="flex items-center gap-2 mt-1">
+<span class="text-[10px] font-bold py-0.5 px-2 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 animate-pulse">Menunggu</span>
+<span class="text-[10px] text-zinc-500">Target: 8 Gwei</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="w-10 h-10 rounded-lg flex items-center justify-center text-zinc-500 hover:bg-white/5 transition-colors">
+<span class="material-symbols-outlined">edit</span>
+</button>
+<button class="w-10 h-10 rounded-lg flex items-center justify-center text-rose-500 hover:bg-rose-500/10 transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</div>
+<!-- List Item 3 -->
+<div class="glass-card p-5 rounded-xl flex items-center justify-between group">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-zinc-400">payments</span>
+</div>
+<div>
+<h4 class="font-bold text-on-surface">Provide Liquidity Uniswap</h4>
+<div class="flex items-center gap-2 mt-1">
+<span class="text-[10px] font-bold py-0.5 px-2 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 animate-pulse">Menunggu</span>
+<span class="text-[10px] text-zinc-500">Target: 10 Gwei</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="w-10 h-10 rounded-lg flex items-center justify-center text-zinc-500 hover:bg-white/5 transition-colors">
+<span class="material-symbols-outlined">edit</span>
+</button>
+<button class="w-10 h-10 rounded-lg flex items-center justify-center text-rose-500 hover:bg-rose-500/10 transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</div>
+</div>
+<!-- View All Link -->
+<div class="mt-8 text-center">
+<button class="text-zinc-500 text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors flex items-center gap-2 mx-auto">
+                            Muat Lebih Banyak
+                            <span class="material-symbols-outlined text-sm">keyboard_double_arrow_down</span>
+</button>
+</div>
+</section>
+</div>
+</div>
+<!-- Floating Decorative Element -->
+<div class="fixed bottom-10 right-10 z-50">
+<button class="w-14 h-14 bg-[#BC13FE] text-white rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(188,19,254,0.5)] hover:scale-110 active:scale-95 transition-all">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add</span>
+</button>
+</div>
+</main>
+</body></html>

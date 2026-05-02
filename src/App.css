@@ -1,0 +1,53 @@
+/* ============================================
+   App.css — Polesan Visual & Animasi LaporUI
+   ============================================ */
+
+/* 1. Kustomisasi Scrollbar (Gaya macOS/Enterprise) */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1; /* Setara dengan warna slate-300 */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #94a3b8; /* Setara dengan warna slate-400 */
+}
+
+/* 2. Animasi Transisi Halaman (Halus & Elegan) */
+.fade-in-up {
+  animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 3. Menghilangkan panah atas/bawah pada input angka (jika nanti dibutuhkan) */
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+/* 4. Efek Glassmorphism Terang (Untuk elemen sticky/navbar) */
+.glass-header-light {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+}
