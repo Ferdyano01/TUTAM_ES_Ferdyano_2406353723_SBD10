@@ -1,7 +1,8 @@
-// 1. Memanggil pustaka utama
-const express = require('express');
-const { Pool } = require('pg'); 
-const cors = require('cors');
+// 1. Memanggil pustaka utama menggunakan sintaks modern (ES Module)
+import express from 'express';
+import pkg from 'pg';
+const { Pool } = pkg;
+import cors from 'cors';
 
 const app = express();
 
@@ -9,7 +10,7 @@ const app = express();
 app.use(cors()); 
 app.use(express.json()); 
 
-// 3. Koneksi ke PostgreSQL Cloud (Neon.tech) menggunakan Vercel Environment Variables
+// 3. Koneksi ke PostgreSQL Cloud (mengambil dari pengaturan Vercel)
 const connectionString = process.env.DATABASE_URL;
 
 const pool = new Pool({
@@ -20,10 +21,9 @@ const pool = new Pool({
 });
 
 pool.connect()
-  .then(() => console.log('✅ BERHASIL Terhubung ke Database PostgreSQL Neon (Cloud)!'))
+  .then(() => console.log('✅ BERHASIL Terhubung ke Database PostgreSQL Neon!'))
   .catch((err) => {
-    console.error('❌ Gagal terhubung ke Neon:');
-    console.error(err.message);
+    console.error('❌ Gagal terhubung ke Neon:', err.message);
   });
 
 // 4. Membuat Tabel Otomatis
@@ -39,7 +39,7 @@ const createTableQuery = `
 `;
 
 pool.query(createTableQuery)
-  .then(() => console.log('✅ Tabel "reports" siap digunakan di Cloud.'))
+  .then(() => console.log('✅ Tabel "reports" siap.'))
   .catch(err => console.error("❌ Gagal membuat tabel:", err));
 
 
@@ -80,5 +80,5 @@ app.delete('/api/reports/:id', async (req, res) => {
   }
 });
 
-// EKSPOR UNTUK VERCEL (Bagian app.listen sudah dihapus agar tidak error 500)
-module.exports = app;
+// 6. EKSPOR UNTUK VERCEL (Menggunakan sintaks modern export default)
+export default app;
