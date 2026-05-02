@@ -9,8 +9,8 @@ const app = express();
 app.use(cors()); 
 app.use(express.json()); 
 
-// 3. Koneksi ke PostgreSQL Cloud (Neon.tech)
-const connectionString = "postgresql://neondb_owner:npg_swiBfFLA6j4V@ep-old-sea-ao0pht0u-pooler.c-2.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require";
+// 3. Koneksi ke PostgreSQL Cloud (Neon.tech) menggunakan Vercel Environment Variables
+const connectionString = process.env.DATABASE_URL;
 
 const pool = new Pool({
   connectionString: connectionString,
@@ -80,11 +80,5 @@ app.delete('/api/reports/:id', async (req, res) => {
   }
 });
 
-// 6. Menyalakan Server (Hanya untuk testing lokal)
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`🚀 Server Backend berjalan di port ${PORT}`);
-});
-
-// EKSPOR UNTUK VERCEL
+// EKSPOR UNTUK VERCEL (Bagian app.listen sudah dihapus agar tidak error 500)
 module.exports = app;
