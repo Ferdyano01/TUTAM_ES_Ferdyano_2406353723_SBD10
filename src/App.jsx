@@ -28,14 +28,15 @@ function App() {
   // 1. READ: Mengambil data dari Backend
   const fetchReports = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/reports');
-      setReports(response.data); // Memasukkan data dari database ke state React
+      // Diubah menjadi URL relatif untuk Vercel[cite: 2]
+      const response = await axios.get('/api/reports'); 
+      setReports(response.data); // Memasukkan data dari database ke state React[cite: 2]
     } catch (error) {
       console.error("Gagal mengambil data dari server:", error);
     }
   };
 
-  // Menjalankan fetchReports otomatis saat komponen pertama kali dimuat
+  // Menjalankan fetchReports otomatis saat komponen pertama kali dimuat[cite: 2]
   useEffect(() => {
     fetchReports();
   }, []);
@@ -45,8 +46,6 @@ function App() {
     e.preventDefault();
     if (!newTitle || !newLocation) return;
 
-    // Kita hanya mengirim data yang diinput user. 
-    // ID, Tanggal, dan Status akan dibuat otomatis oleh PostgreSQL!
     const newTicketData = {
       title: newTitle,
       location: newLocation,
@@ -54,13 +53,12 @@ function App() {
     };
 
     try {
-      // Kirim POST request ke backend
-      const response = await axios.post('http://localhost:5000/api/reports', newTicketData);
+      // Diubah menjadi URL relatif untuk Vercel[cite: 2]
+      const response = await axios.post('/api/reports', newTicketData); 
       
-      // Tambahkan data yang berhasil disimpan (beserta ID dari DB) ke tampilan teratas
-      setReports([response.data, ...reports]); 
+      setReports([response.data, ...reports]); // Tambahkan data yang berhasil disimpan ke tampilan[cite: 2]
       
-      // Reset Form
+      // Reset Form[cite: 2]
       setNewTitle('');
       setNewLocation('');
       setNewPriority('Menengah');
@@ -75,10 +73,10 @@ function App() {
   // 3. DELETE: Menghapus data dari Backend
   const handleDelete = async (idToRemove) => {
     try {
-      // Kirim DELETE request ke backend berdasarkan ID
-      await axios.delete(`http://localhost:5000/api/reports/${idToRemove}`);
+      // Diubah menjadi URL relatif untuk Vercel[cite: 2]
+      await axios.delete(`/api/reports/${idToRemove}`); 
       
-      // Jika berhasil di database, hapus juga dari tampilan React
+      // Jika berhasil di database, hapus juga dari tampilan React[cite: 2]
       setReports(reports.filter(report => report.id !== idToRemove));
     } catch (error) {
       console.error("Gagal menghapus laporan:", error);
@@ -282,7 +280,7 @@ function App() {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-100">
-                      {/* Mapping menggunakan data yang sudah difilter */}
+                      {/* Mapping menggunakan data yang sudah difilter[cite: 2] */}
                       {filteredReports.map((report) => (
                         <tr key={report.id} className="hover:bg-slate-50/50 transition-colors">
                           <td className="px-6 py-4 font-medium text-slate-900">{report.id}</td>
@@ -304,14 +302,14 @@ function App() {
                         </tr>
                       ))}
 
-                      {/* Kondisi Jika Laporan Kosong (Belum Pernah Buat) */}
+                      {/* Kondisi Jika Laporan Kosong[cite: 2] */}
                       {reports.length === 0 && (
                         <tr>
                           <td colSpan="5" className="px-6 py-12 text-center text-slate-400 font-medium">Belum ada laporan yang Anda buat.</td>
                         </tr>
                       )}
 
-                      {/* Kondisi Jika Pencarian Tidak Ditemukan (Tapi ada laporan) */}
+                      {/* Kondisi Jika Pencarian Tidak Ditemukan[cite: 2] */}
                       {reports.length > 0 && filteredReports.length === 0 && (
                         <tr>
                           <td colSpan="5" className="px-6 py-12 text-center text-slate-400 font-medium">
