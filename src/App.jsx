@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios'; // MENGIMPOR AXIOS
+import axios from 'axios';
 import './App.css'; 
 
 function App() {
@@ -28,15 +28,20 @@ function App() {
   // 1. READ: Mengambil data dari Backend
   const fetchReports = async () => {
     try {
-      // Diubah menjadi URL relatif untuk Vercel[cite: 2]
       const response = await axios.get('/api/reports'); 
-      setReports(response.data); // Memasukkan data dari database ke state React[cite: 2]
+      // SAFETY CHECK: Pastikan data yang diterima adalah array sebelum disimpan
+      if (Array.isArray(response.data)) {
+        setReports(response.data);
+      } else {
+        console.error("Data dari server bukan array:", response.data);
+        setReports([]); // Reset ke array kosong agar aplikasi tidak crash
+      }
     } catch (error) {
       console.error("Gagal mengambil data dari server:", error);
+      setReports([]); // Fallback ke array kosong jika terjadi error server
     }
   };
 
-  // Menjalankan fetchReports otomatis saat komponen pertama kali dimuat[cite: 2]
   useEffect(() => {
     fetchReports();
   }, []);
@@ -53,12 +58,11 @@ function App() {
     };
 
     try {
-      // Diubah menjadi URL relatif untuk Vercel[cite: 2]
       const response = await axios.post('/api/reports', newTicketData); 
       
-      setReports([response.data, ...reports]); // Tambahkan data yang berhasil disimpan ke tampilan[cite: 2]
+      // Tambahkan data baru (jika berhasil) ke tampilan
+      setReports([response.data, ...reports]); 
       
-      // Reset Form[cite: 2]
       setNewTitle('');
       setNewLocation('');
       setNewPriority('Menengah');
@@ -73,10 +77,7 @@ function App() {
   // 3. DELETE: Menghapus data dari Backend
   const handleDelete = async (idToRemove) => {
     try {
-      // Diubah menjadi URL relatif untuk Vercel[cite: 2]
       await axios.delete(`/api/reports/${idToRemove}`); 
-      
-      // Jika berhasil di database, hapus juga dari tampilan React[cite: 2]
       setReports(reports.filter(report => report.id !== idToRemove));
     } catch (error) {
       console.error("Gagal menghapus laporan:", error);
@@ -93,16 +94,23 @@ function App() {
     setCurrentView('dashboard');
   };
 
-  // --- LOGIKA FILTER PENCARIAN ---
-  const filteredReports = reports.filter(report => {
-    const query = searchQuery.toLowerCase();
-    return (
-      report.id.toLowerCase().includes(query) ||
-      report.title.toLowerCase().includes(query) ||
-      report.location.toLowerCase().includes(query)
-    );
-  });
+  // --- LOGIKA FILTER PENCARIAN (Dengan Safety Check) ---
+  // SAFETY CHECK: Pastikan reports adalah array sebelum menjalankan .filter()
+  const filteredReports = Array.isArray(reports) 
+    ? reports.filter(report => {
+        const query = searchQuery.toLowerCase();
+        // Mencegah error jika salah satu properti bernilai undefined
+        const id = report.id || "";
+        const title = report.title || "";
+        const location = report.location || "";
 
+        return (
+          id.toLowerCase().includes(query) ||
+          title.toLowerCase().includes(query) ||
+          location.toLowerCase().includes(query)
+        );
+      })
+    : [];
 
   // ==========================================
   // VIEW 1: HALAMAN REGISTRASI
@@ -280,7 +288,7 @@ function App() {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-100">
-                      {/* Mapping menggunakan data yang sudah difilter[cite: 2] */}
+                      {/* Mapping menggunakan data yang sudah difilter */}
                       {filteredReports.map((report) => (
                         <tr key={report.id} className="hover:bg-slate-50/50 transition-colors">
                           <td className="px-6 py-4 font-medium text-slate-900">{report.id}</td>
@@ -302,14 +310,14 @@ function App() {
                         </tr>
                       ))}
 
-                      {/* Kondisi Jika Laporan Kosong[cite: 2] */}
+                      {/* Kondisi Jika Laporan Kosong */}
                       {reports.length === 0 && (
                         <tr>
                           <td colSpan="5" className="px-6 py-12 text-center text-slate-400 font-medium">Belum ada laporan yang Anda buat.</td>
                         </tr>
                       )}
 
-                      {/* Kondisi Jika Pencarian Tidak Ditemukan[cite: 2] */}
+                      {/* Kondisi Jika Pencarian Tidak Ditemukan */}
                       {reports.length > 0 && filteredReports.length === 0 && (
                         <tr>
                           <td colSpan="5" className="px-6 py-12 text-center text-slate-400 font-medium">
